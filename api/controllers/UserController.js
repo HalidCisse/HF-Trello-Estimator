@@ -5,6 +5,8 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+var Trello = require("trello");
+
 module.exports = {
 
   users: function (req, res) {
@@ -20,25 +22,55 @@ module.exports = {
 
   create: function (req, res) {
 
+    // console.log('--------------- UserController create --------------');
+    // console.log('------------------------------------------------------------');
+
     var newUser = {
-      id    : req.param('memberId'),
       token : req.param('token'),
     };
 
-    console.log('--------------- UserController create --------------');
-    console.log(req.params.all());
-    console.log(newUser);
-    console.log('------------------------------------------------------------');
+    if(!newUser.token){
+      return res.json(500, 'No token found');
+    }
+
+    var trello = new Trello(sails.config.trello.appKey, newUser.token);
+
+    trello.makeRequest('get', '/1/members/me')
+      .then((member) => {
+        if (!member) {
+          return res.send(404, 'trello user not found');
+        }
+
+        newUser.id = member.id;
+
+        User.findOrCreate({id : newUser.id}, newUser).exec(function (err, createdUser) {
+          if (err) {
+            sails.log.error(err);
+            return res.send(500, err);
+          }
+
+          createdUser.token = newUser.token;
+          createdUser.save(
+            function(err){
+              if (err) {
+                sails.log.error(err);
+                return res.send(500, err);
+              }
+
+              return res.json({id : createdUser.id});
+            });
+        });
+      });
 
 
-    User.create(newUser).exec(function (err, user) {
-      if (err) {
-        sails.log.error(err);
-        return res(500, err);
-      }
 
-      res.json(user);
-    });
+
+
+
+
+
+
+
   },
 
   remove: function (req, res) {

@@ -12,12 +12,12 @@ module.exports = {
   /**
    * `TrelloHookController`
    */
-  onAction: function (req, res) {
+  callback: function (req, res) {
 
-    console.log('--------------- TrelloHookController onAction --------------');
-    console.log(req.params.all().type);
-    console.log(req.params.all().data);
-    console.log(req.body.action);
+    console.log('--------------- TrelloHookController callback --------------');
+    // console.log(req.params.all().type);
+    // console.log(req.params.all().data);
+    // console.log(req.body.action);
     console.log('------------------------------------------------------------');
 
 

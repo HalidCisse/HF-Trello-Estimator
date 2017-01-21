@@ -48,7 +48,8 @@ module.exports.routes = {
   ***************************************************************************/
 
 
-  'post /api/user' : 'UserController.create',
+  'post /api/user'           : 'UserController.create',
+  'get /api/trelloCallback' : 'TrelloHookController.callback',
 
 
 
