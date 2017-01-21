@@ -1,46 +1,45 @@
 /**
- * StoryController
+ * ProfileCostController
  *
- * @description :: Server-side logic for managing Stories
+ * @description :: Server-side logic for managing Profilecosts
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
 module.exports = {
 
-  stories: function (req, res) {
-    Story.find().exec(function (err, stories) {
+  costs: function (req, res) {
+    ProfileCost.find().exec(function (err, costs) {
       if (err) {
         sails.log.error(err);
         return res(500, err);
       }
 
-      res.json(stories);
+      res.json(costs);
     });
   },
 
-  story: function (req, res) {
+  cost: function (req, res) {
     var id = req.param('id');
 
-    Story.create({id: id}).exec(function (err, story) {
+    ProfileCost.create({id: id}).exec(function (err, cost) {
       if (err) {
         sails.log.error(err);
         return res(500, err);
       }
 
-      res.json(story);
+      res.json(cost);
     });
   },
 
   remove: function (req, res) {
-    Story.destroy({id: id}).exec(function (err, story) {
+    ProfileCost.destroy({id: id}).exec(function (err, cost) {
       if (err) {
         sails.log.error(err);
         return res(500, err);
       }
 
-      res.json(story);
+      res.json(cost);
     });
   }
-	
 };
 

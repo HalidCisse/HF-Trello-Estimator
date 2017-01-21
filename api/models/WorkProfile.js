@@ -8,7 +8,26 @@
 module.exports = {
 
   attributes: {
+    name       : { type: 'string' },
 
+    mandays    : {
+      type: 'integer',
+      defaultsTo : 1
+    },
+
+
+
+
+
+    profileCosts : {
+      collection : 'profileCost',
+      via: 'workProfile'
+    },
+
+    stories : {
+      collection : 'story',
+      via: 'workProfiles'
+    }
   }
 };
 

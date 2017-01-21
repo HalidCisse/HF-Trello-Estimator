@@ -8,9 +8,16 @@
 module.exports = {
 
   attributes: {
-    name: { type: 'string' },
+    name : { type: 'string' },
     email: { type: 'email' },
-    age: { type: 'integer' }
+    token: { type: 'string' },
+
+
+    boards: {
+      collection: 'board',
+      via: 'user'
+    }
+
   }
 };
 
