@@ -1,5 +1,5 @@
 /**
- * WorkProfile.js
+ * Profile.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
@@ -10,23 +10,23 @@ module.exports = {
   attributes: {
     name       : { type: 'string' },
 
-    mandays    : {
-      type: 'integer',
-      defaultsTo : 1
+
+
+
+
+    cardProfiles : {
+      collection : 'cardProfile',
+      via: 'profile'
     },
 
-
-
-
-
-    profileCosts : {
-      collection : 'profileCost',
-      via: 'workProfile'
+    boardProfiles: {
+      collection: 'boardProfile',
+      via: 'profile'
     },
 
-    stories : {
-      collection : 'story',
-      via: 'workProfiles'
+    cards : {
+      collection : 'card',
+      via: 'profiles'
     }
   }
 };

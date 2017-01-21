@@ -1,46 +1,47 @@
 /**
- * StoryController
+ * WorkProfileController
  *
- * @description :: Server-side logic for managing Stories
+ * @description :: Server-side logic for managing Workprofiles
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
 module.exports = {
 
-  stories: function (req, res) {
-    Story.find().exec(function (err, stories) {
+  profiles: function (req, res) {
+    Profile.find().exec(function (err, profiles) {
       if (err) {
         sails.log.error(err);
         return res(500, err);
       }
 
-      res.json(stories);
+      res.json(profiles);
     });
   },
 
-  story: function (req, res) {
+  profile: function (req, res) {
     var id = req.param('id');
 
-    Story.create({id: id}).exec(function (err, story) {
+    Profile.create({id: id}).exec(function (err, profile) {
       if (err) {
         sails.log.error(err);
         return res(500, err);
       }
 
-      res.json(story);
+      res.json(profile);
     });
   },
 
   remove: function (req, res) {
-    Story.destroy({id: id}).exec(function (err, story) {
+    Profile.destroy({id: id}).exec(function (err, profile) {
       if (err) {
         sails.log.error(err);
         return res(500, err);
       }
 
-      res.json(story);
+      res.json(profile);
     });
   }
-	
+
+
 };
 

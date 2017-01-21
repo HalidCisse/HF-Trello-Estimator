@@ -22,13 +22,13 @@ module.exports = {
 
 
 
-    stories: {
-      collection: 'story',
+    cards: {
+      collection: 'card',
       via: 'board'
     },
 
-    profileCosts: {
-      collection: 'profileCost',
+    boardProfiles: {
+      collection: 'boardProfile',
       via: 'board'
     },
 

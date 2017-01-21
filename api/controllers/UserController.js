@@ -22,8 +22,9 @@ module.exports = {
 
   create: function (req, res) {
 
-    // console.log('--------------- UserController create --------------');
-    // console.log('------------------------------------------------------------');
+    console.log('----------------- UserController create --------------------');
+    console.log(req.param('token'));
+    console.log('------------------------------------------------------------');
 
     var newUser = {
       token : req.param('token'),
@@ -61,16 +62,6 @@ module.exports = {
             });
         });
       });
-
-
-
-
-
-
-
-
-
-
   },
 
   remove: function (req, res) {

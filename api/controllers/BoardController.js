@@ -7,6 +7,23 @@
 
 module.exports = {
 
+  // subscribe to change hooks to all board cards
+
+  watch: function (req, res) {
+
+    var boardId = req.param('token');
+
+
+    Board.find().exec(function (err, boards) {
+      if (err) {
+        sails.log.error(err);
+        return res(500, err);
+      }
+
+      res.json(boards);
+    });
+  },
+
   boards: function (req, res) {
     Board.find().exec(function (err, boards) {
       if (err) {
