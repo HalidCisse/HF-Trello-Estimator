@@ -39,11 +39,6 @@ module.exports = {
 
   watchBoardCards: function(boardId, trello, next) {
 
-    // Get all registered tokens and webhooks
-    // Url will look like: https://api.trello.com/1/members/me/tokens?webhooks=true&key=YOURKEY&token=YOURTOKEN
-    // https://api.trello.com/1/boards/586a721e00a6e047b6486050/cards?fields=name,url&key=d1f4324cddb886f38c6c944cb8a50cfb&token=d855cb4a98d998fca96119e11ad5b59d2032bc3d852b5c89ee007f0bedbd8227
-    // 'get', '/1/boards/' + boardId + '/cards?fields=shortUrl,name', {webhooks:false}
-
     trello.getCardsOnBoard(boardId)
       .then((allCards) => {
         for (i = 0; i < allCards.length; i++) {

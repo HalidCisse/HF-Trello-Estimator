@@ -42,32 +42,80 @@ module.exports = {
     });
   },
 
-
-
-  manday: function (req, res) {
+  setManday: function (req, res) {
 
     var cardId    = req.param('cardId');
     var profileId = req.param('profileId');
     var manday    = req.param('manday');
 
-    Card.findOne({id : cardId}).exec(function (err, cards) {
-      if (err) {
-        sails.log.error(err);
-        return res(500, err);
-      }
+    if(!cardId){
+      return res.send(500, 'cardId cant be empty');
+    }
+    if(!profileId){
+      return res.send(500, 'profileId cant be empty');
+    }
+    if(!mandays){
+      return res.send(500, 'mandays cant be empty');
+    }
 
-      res.json(cards);
-    });
+    CardProfile.findOrCreate({card : cardId, profile : profileId},
+      {
+        card      : cardId,
+        profile   : profileId,
+        mandays   : mandays
+      })
+      .exec(function (err, createdProfile) {
+        if (err) {
+          sails.log.error(err);
+          return res.send(500, err);
+        }
+
+        createdProfile.mandays   = mandays;
+        createdProfile.save(
+          function(err){
+            if (err) {
+              sails.log.error(err);
+            }
+            res.send(createdProfile);
+          });
+      });
   },
 
-  profile: function (req, res) {
-    Card.find().exec(function (err, cards) {
+  addProfile: function (req, res) {
+    var cardId    = req.param('cardId');
+    var profileId = req.param('profileId');
+    var mandays   = req.param('mandays');
+
+    if(!cardId){
+      return res.send(500, 'cardId cant be empty');
+    }
+    if(!profileId){
+      return res.send(500, 'profileId cant be empty');
+    }
+    if(!mandays){
+      return res.send(500, 'mandays cant be empty');
+    }
+
+    CardProfile.findOrCreate({card : cardId, profile : profileId},
+      {
+        card      : cardId,
+        profile   : profileId,
+        mandays   : mandays
+      })
+      .exec(function (err, createdProfile) {
       if (err) {
         sails.log.error(err);
-        return res(500, err);
+        return res.send(500, err);
       }
 
-      res.json(cards);
+        createdProfile.mandays   = mandays;
+        createdProfile.save(
+        function(err){
+          if (err) {
+            sails.log.error(err);
+          }
+          res.send(createdProfile);
+        });
     });
   },
 };

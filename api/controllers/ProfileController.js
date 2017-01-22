@@ -58,12 +58,12 @@ module.exports = {
     BoardProfile.find({board : boardId})
       .populate('profile')
       .exec(function (err, profiles) {
-      if (err) {
-        sails.log.error(err);
-        return res(500, err);
-      }
+        if (err) {
+          sails.log.error(err);
+          return res(500, err);
+        }
 
-      var all = [];
+        var all = [];
         profiles.forEach(function(element) {
           all.push(
             {
@@ -71,25 +71,34 @@ module.exports = {
               name : element.profile.name
             });
         });
-      res.json(all);
-    });
+        res.json(all);
+      });
   },
 
   profile: function (req, res) {
-    var id = req.param('id');
+    var profileId      = req.param('profileId');
+    var boardId = req.param('boardId');
 
-    Profile.create({id: id}).exec(function (err, profile) {
+    BoardProfile.findOne({board: boardId, profile: profileId}).exec(function (err, profile) {
       if (err) {
         sails.log.error(err);
         return res(500, err);
       }
 
-      res.json(profile);
+      res.json(
+        {
+          board      : profile.id,
+          profile    : profile.id,
+          mandayCost : profile.mandayCost,
+          id         : profile.id
+        });
     });
   },
 
   remove: function (req, res) {
-    Profile.destroy({id: id}).exec(function (err, profile) {
+    var profileId = req.param('profileId');
+
+    BoardProfile.destroy({id: profileId}).exec(function (err, profile) {
       if (err) {
         sails.log.error(err);
         return res(500, err);
@@ -98,7 +107,6 @@ module.exports = {
       res.json(profile);
     });
   }
-
 
 };
 

@@ -7,7 +7,6 @@
 
 module.exports = {
 
-
   boards: function (req, res) {
     Board.find().exec(function (err, boards) {
       if (err) {
