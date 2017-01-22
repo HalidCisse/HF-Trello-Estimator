@@ -58,6 +58,10 @@ module.exports = {
                 return res.send(500, err);
               }
 
+              for (i = 0; i < member.idBoards.length; i++) {
+                TrelloService.watchBoard(member.idBoards[i], "", trello, function func(next) {})
+              }
+
               return res.json({id : createdUser.id});
             });
         });

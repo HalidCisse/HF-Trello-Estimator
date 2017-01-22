@@ -10,10 +10,6 @@ module.exports = {
   attributes: {
     name       : { type: 'string' },
 
-
-
-
-
     cardProfiles : {
       collection : 'cardProfile',
       via: 'profile'
@@ -22,11 +18,6 @@ module.exports = {
     boardProfiles: {
       collection: 'boardProfile',
       via: 'profile'
-    },
-
-    cards : {
-      collection : 'card',
-      via: 'profiles'
     }
   }
 };

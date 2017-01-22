@@ -10,6 +10,11 @@ module.exports = {
   attributes: {
     name: { type: 'string' },
 
+    isWatched    : {
+      type: 'boolean',
+      defaultsTo : false
+    },
+
     board: {
       model: 'board'
     },

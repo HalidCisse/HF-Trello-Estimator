@@ -49,7 +49,10 @@ module.exports.routes = {
 
 
   'post /api/user'           : 'UserController.create',
-  'get /api/trelloCallback' : 'TrelloHookController.callback',
+  'get /api/trelloCallback'  : 'TrelloHookController.callback',
+
+  'post /api/profile'           : 'ProfileController.create',
+  'get  /api/profiles/:boardId' : 'ProfileController.profiles',
 
 
 

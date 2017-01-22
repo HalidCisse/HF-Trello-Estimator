@@ -15,6 +15,11 @@ module.exports = {
       defaultsTo : 8
     },
 
+    isWatched    : {
+      type: 'boolean',
+      defaultsTo : false
+    },
+
     downPayPercent : {
       type: 'float',
       defaultsTo : 14
