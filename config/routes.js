@@ -52,7 +52,7 @@ module.exports.routes = {
   'get /api/trelloCallback'               : 'TrelloHookController.callback',
 
   'post /api/profile'                     : 'ProfileController.create',
-  'get  /api/profiles/:boardId'           : 'ProfileController.profiles',
+  'get  /api/profiles/:shortLink'           : 'ProfileController.profiles',
   'get  /api/profile/:boardId/:profileId' : 'ProfileController.profile',
 
   'put /api/Cards/addProfile'             : 'CardController.addProfile',

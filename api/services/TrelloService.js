@@ -2,17 +2,16 @@
  * Created by Halid on 1/21/17.
  */
 
-var http = require('http');
+var http   = require('http');
 var concat = require('concat-stream');
-
 
 
 module.exports = {
 
+  watchBoard: function(board, trello, next) {
 
-  watchBoard: function(boardId, boardName, trello, next) {
-
-    Board.findOrCreate({id : boardId}, {id: boardId, name : boardName, isWatched : false}).exec(function (err, createdBoard) {
+    Board.findOrCreate({id : board.id}, {shortLink: board.shortLink, id: board.id, name : board.name, isWatched : false})
+      .exec(function (err, createdBoard) {
       if (err) {
         sails.log.error(err);
         return next(500, err);
@@ -23,7 +22,7 @@ module.exports = {
         //createdBoard.isWatched = false;
       }
 
-      createdBoard.name = boardName;
+      createdBoard.name = board.name;
       createdBoard.save(
         function(err){
           if (err) {
@@ -44,11 +43,13 @@ module.exports = {
         for (i = 0; i < allCards.length; i++) {
           var card = allCards[i];
 
-          if(!card.shortLink){
-            card.shortLink = card.id;
-          }
-
-          Card.findOrCreate({id : card.shortLink}, {id: card.shortLink, name : card.name, isWatched : false}).exec(function (err, createdCard) {
+          Card.findOrCreate({id : card.id},
+            {
+              id        : card.id,
+              shortLink : card.shortLink,
+              name      : card.name,
+              isWatched : false
+            }).exec(function (err, createdCard) {
             if (err) {
               sails.log.error(err);
               return next(500, err);

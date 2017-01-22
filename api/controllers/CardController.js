@@ -44,9 +44,9 @@ module.exports = {
 
   setManday: function (req, res) {
 
-    var cardId    = req.param('cardId');
-    var profileId = req.param('profileId');
-    var manday    = req.param('manday');
+    var cardId     = req.param('cardId');
+    var profileId  = req.param('profileId');
+    var mandays    = req.param('mandays');
 
     if(!cardId){
       return res.send(500, 'cardId cant be empty');

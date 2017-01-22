@@ -10,6 +10,10 @@ module.exports = {
   attributes: {
     name           : { type: 'string' },
 
+    shortLink    : {
+      type: 'string'
+    },
+
     totalMonths    : {
       type: 'integer',
       defaultsTo : 8
