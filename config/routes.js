@@ -32,10 +32,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'homepage'
-  },
-
+  '/': {},
 
   /***************************************************************************
   *                                                                          *
@@ -47,20 +44,14 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  'POST /api/user'                        : 'UserController.create',
+  'GET /api/trelloCallback'               : 'TrelloHookController.callback',
 
-  'post /api/user'                        : 'UserController.create',
-  'get /api/trelloCallback'               : 'TrelloHookController.callback',
+  'POST /api/profile'                     : 'ProfileController.create',
+  'GET  /api/profiles/:shortLink'           : 'ProfileController.profiles',
+  'GET  /api/profile/:boardId/:profileId' : 'ProfileController.profile',
 
-  'post /api/profile'                     : 'ProfileController.create',
-  'get  /api/profiles/:shortLink'           : 'ProfileController.profiles',
-  'get  /api/profile/:boardId/:profileId' : 'ProfileController.profile',
-
-  'put /api/Cards/addProfile'             : 'CardController.addProfile',
-  'put /api/Cards/setManday'              : 'CardController.setManday',
-
-
-
-
-
+  'PUT /api/Cards/addProfile'             : 'CardController.addProfile',
+  'PUT /api/Cards/setManday'              : 'CardController.setManday'
 
 };
