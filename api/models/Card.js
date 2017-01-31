@@ -8,13 +8,15 @@
 module.exports = {
 
   attributes: {
-    name: { type: 'string' },
-
-    shortLink    : {
+    name: {
       type: 'string'
     },
 
-    isWatched    : {
+    shortLink: {
+      type: 'string'
+    },
+
+    isWatched: {
       type: 'boolean',
       defaultsTo : false
     },
@@ -28,5 +30,5 @@ module.exports = {
       via: 'card'
     }
   }
+  
 };
-

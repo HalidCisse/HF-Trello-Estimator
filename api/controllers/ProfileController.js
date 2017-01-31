@@ -8,101 +8,99 @@
 module.exports = {
 
   create: function (req, res) {
-
     var profileName = req.param('name');
-    var boardShortLink     = req.param('boardShortLink');
-    var mandayCost  = req.param('mandayCost');
+    var boardShortLink = req.param('boardShortLink');
+    var mandayCost = req.param('mandayCost');
 
-    if(!profileName){
+    if(!profileName) {
       return res.send(500, 'profileName cant be empty');
     }
 
-    if(!boardShortLink){
+    if(!boardShortLink) {
       return res.send(500, 'boardShortLink cant be empty');
     }
 
-    if(!mandayCost){
+    if(!mandayCost) {
       return res.send(500, 'mandayCost cant be empty');
     }
 
-    Profile.findOrCreate({name : profileName}, {name : profileName}).exec(function (err, profile) {
-      if (err) {
-        sails.log.error(err);
-        return res.send(500, err);
-      }
+    Profile
+      .findOrCreate({name : profileName}, {name : profileName})
+      .exec(function (err, profile) {
+        if (err) {
+          sails.log.error(err);
+          return res.send(500, err);
+        }
 
-      Board.findOne({shortLink : boardShortLink})
-        .exec(function (err, board) {
-          if (err) {
-            sails.log.error(err);
-            return res(500, err);
-          }
-
-          var newBoardProfile = {
-            mandayCost : mandayCost,
-            board      : board.id,
-            profile    : profile.id
-          };
-
-          BoardProfile.findOrCreate({board : board.id, profile : profile.id}, newBoardProfile).exec(function (err, boardProfile) {
+        Board
+          .findOne({shortLink : boardShortLink})
+          .exec(function (err, board) {
             if (err) {
               sails.log.error(err);
-              return res.send(500, err);
+              return res(500, err);
             }
 
-            boardProfile.mandayCost = mandayCost;
-            boardProfile.save(
-              function(err){
+            var newBoardProfile = {
+              mandayCost : mandayCost,
+              board      : board.id,
+              profile    : profile.id
+            };
+
+            BoardProfile.findOrCreate({board : board.id, profile : profile.id}, newBoardProfile).exec(function (err, boardProfile) {
+              if (err) {
+                sails.log.error(err);
+                return res.send(500, err);
+              }
+
+              boardProfile.mandayCost = mandayCost;
+              boardProfile.save(function (err) {
                 res.json(boardProfile);
               });
+            });
           });
-        });
-    });
+      });
   },
 
   profiles: function (req, res) {
     var shortLink = req.param('shortLink');
+    console.log('ShortLink', shortLink);
 
     Board
       .findOne({shortLink : shortLink})
       .populate('boardProfiles')
-      .then(function (board){
+      .then(function (board) {
         console.log('Board', board);
         var boardProfiles = BoardProfile.find({
           board: board.id
-        }).then(function (boardProfiles){
+        }).then(function (boardProfiles) {
             return boardProfiles;
           });
         return [board, boardProfiles];
       })
-      .spread(function (board, boardProfiles){
+      .spread(function (board, boardProfiles) {
+        var all = [];
+        var count = boardProfiles.length;
 
-          var all = [];
-          var count = boardProfiles.length;
-
-        for (i = 0; i < boardProfiles.length; i++) {
-          var element = boardProfiles[i];
-          Profile.findOne({id: element.profile})
-            .then(function (profile){
-              all.push(
-                {
-                  id        : profile.id,
-                  mandayCost: element.mandayCost,
-                  name      : profile.name
-                });
-
+        _.each(boardProfiles, function (bProfile) {
+          Profile.findOne({id: bProfile.profile})
+            .then(function (profile) {
+              all.push({
+                id        : profile.id,
+                mandayCost: bProfile.mandayCost,
+                name      : profile.name
+              });
               count = count -1;
-              if(count <= 0){
+              if(count <= 0) {
                 res.json(all);
               }
             })
-            .catch(function (err){
+            .catch(function (err) {
               count = count -1;
             });
-        }
-      }).catch(function (err){
-      if (err) return res.serverError(err);
-    });
+        });
+      }).catch(function (err) {
+        if (err) return res.serverError(err);
+      });
   },
 
   profile: function (req, res) {

@@ -8,19 +8,18 @@
 module.exports = {
 
   attributes: {
-
-    mandayCost : {
+    mandayCost: {
       type: 'float',
-      defaultsTo : 0
+      defaultsTo: 0
     },
 
-    board : {
-      model : 'board'
+    board: {
+      model: 'board'
     },
 
-    profile : {
-      model : 'profile'
+    profile: {
+      model: 'profile'
     }
   }
-};
 
+};

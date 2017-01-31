@@ -8,16 +8,22 @@
 module.exports = {
 
   attributes: {
-    name : { type: 'string' },
-    email: { type: 'email' },
-    token: { type: 'string' },
+    name: {
+      type: 'string'
+    },
 
+    email: {
+      type: 'email'
+    },
+
+    token: {
+      type: 'string'
+    },
 
     boards: {
       collection: 'board',
       via: 'user'
     }
-
   }
+  
 };
-

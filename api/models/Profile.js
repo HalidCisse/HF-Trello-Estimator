@@ -8,10 +8,12 @@
 module.exports = {
 
   attributes: {
-    name       : { type: 'string' },
+    name: {
+      type: 'string'
+    },
 
-    cardProfiles : {
-      collection : 'cardProfile',
+    cardProfiles: {
+      collection: 'cardProfile',
       via: 'profile'
     },
 
@@ -20,5 +22,5 @@ module.exports = {
       via: 'profile'
     }
   }
+  
 };
-

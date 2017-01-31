@@ -9,18 +9,18 @@ module.exports = {
 
   attributes: {
 
-    mandays    : {
+    mandays: {
       type: 'integer',
-      defaultsTo : 1
+      defaultsTo: 1
     },
 
-    card : {
-      model : 'card'
+    card: {
+      model: 'card'
     },
 
-    profile : {
-      model : 'profile'
+    profile: {
+      model: 'profile'
     }
   }
-};
 
+};

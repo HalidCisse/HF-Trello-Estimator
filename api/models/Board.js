@@ -8,25 +8,25 @@
 module.exports = {
 
   attributes: {
-    name         : {
+    name: {
       type: 'string'
     },
 
-    shortLink    : {
+    shortLink: {
       type: 'string'
     },
 
-    totalMonths  : {
+    totalMonths: {
       type: 'integer',
       defaultsTo : 8
     },
 
-    isWatched    : {
+    isWatched: {
       type: 'boolean',
       defaultsTo : false
     },
 
-    downPayPercent : {
+    downPayPercent: {
       type: 'float',
       defaultsTo : 14
     },
