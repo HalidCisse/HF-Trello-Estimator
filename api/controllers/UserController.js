@@ -24,11 +24,11 @@ module.exports = {
 
   create: function (req, res) {
     console.log('----------------- UserController create --------------------');
-    console.log(req.param('token'));
+    console.log(req.body.token);
     console.log('------------------------------------------------------------');
 
     var newUser = {
-      token : req.param('token')
+      token : req.body.token
     };
 
     if (!newUser.token) {

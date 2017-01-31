@@ -66,37 +66,39 @@ module.exports = {
     console.log('ShortLink', shortLink);
 
     Board
-      .findOne({shortLink : shortLink})
+      .findOne({ shortLink: shortLink })
       .populate('boardProfiles')
       .then(function (board) {
-        console.log('Board', board);
-        var boardProfiles = BoardProfile.find({
-          board: board.id
-        }).then(function (boardProfiles) {
+        var boardProfiles = BoardProfile
+          .find({ board: board.id })
+          .then(function (boardProfiles) {
             return boardProfiles;
           });
         return [board, boardProfiles];
       })
       .spread(function (board, boardProfiles) {
-        var all = [];
-        var count = boardProfiles.length;
+        var profiles = [];
 
-        _.each(boardProfiles, function (bProfile) {
-          Profile.findOne({id: bProfile.profile})
+        async.each(boardProfiles, function (bProfile, cb) {
+          Profile
+            .findOne({ id: bProfile.profile })
             .then(function (profile) {
-              all.push({
+              profiles.push({
                 id        : profile.id,
                 mandayCost: bProfile.mandayCost,
                 name      : profile.name
               });
-              count = count -1;
-              if(count <= 0) {
-                res.json(all);
-              }
+              cb(null);
             })
             .catch(function (err) {
-              count = count -1;
+              cb(err);
             });
+        }, function (err) {
+          if (err) {
+            console.log('Error in Profile.profiles :', err);
+            throw err;
+          }
+          res.json(profiles);
         });
       }).catch(function (err) {
         if (err) return res.serverError(err);
