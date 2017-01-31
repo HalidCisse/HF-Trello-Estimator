@@ -8,13 +8,15 @@
 module.exports = {
 
   attributes: {
-    name           : { type: 'string' },
+    name         : {
+      type: 'string'
+    },
 
     shortLink    : {
       type: 'string'
     },
 
-    totalMonths    : {
+    totalMonths  : {
       type: 'integer',
       defaultsTo : 8
     },
@@ -28,8 +30,6 @@ module.exports = {
       type: 'float',
       defaultsTo : 14
     },
-
-
 
     cards: {
       collection: 'card',
@@ -46,4 +46,3 @@ module.exports = {
     }
   }
 };
-

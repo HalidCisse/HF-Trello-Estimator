@@ -67,6 +67,7 @@ module.exports = {
       .findOne({shortLink : shortLink})
       .populate('boardProfiles')
       .then(function (board){
+        console.log('Board', board);
         var boardProfiles = BoardProfile.find({
           board: board.id
         }).then(function (boardProfiles){
@@ -138,4 +139,3 @@ module.exports = {
   }
 
 };
-

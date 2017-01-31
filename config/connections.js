@@ -60,12 +60,10 @@ module.exports.connections = {
     adapter: 'sails-mongo',
     host: 'localhost',
     port: 27017,
-    database: 'hf_dev' //optional
+    database: 'hfte_dev' //optional
   },
 
-
-
-    /***************************************************************************
+  /***************************************************************************
   *                                                                          *
   * PostgreSQL is another officially supported relational database.          *
   * http://en.wikipedia.org/wiki/PostgreSQL                                  *
@@ -81,7 +79,6 @@ module.exports.connections = {
   //   password: 'YOUR_POSTGRES_PASSWORD', // optional
   //   database: 'YOUR_POSTGRES_DB' //optional
   // }
-
 
   /***************************************************************************
   *                                                                          *
