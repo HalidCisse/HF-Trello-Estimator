@@ -53,7 +53,7 @@ module.exports.routes = {
   'POST /api/profile'                     : 'ProfileController.create',
   'GET  /api/profiles/:shortLink'         : 'ProfileController.profiles',
   'GET  /api/profile/:boardId/:profileId' : 'ProfileController.profile',
-  'PUT /api/Cards/setManday'              : 'CardController.setManday'
+  'PUT /api/Cards/setManday'              : 'CardController.setManday',
 
   'post /api/Cards/addProfile'               : 'CardController.addProfile',
   'put /api/Cards/setManday'                 : 'CardController.setManday',
