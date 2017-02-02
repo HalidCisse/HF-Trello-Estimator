@@ -9,9 +9,9 @@ module.exports = {
 
   create: function (req, res) {
 
-    var profileName = req.param('name');
-    var boardShortLink     = req.param('boardShortLink');
-    var mandayCost  = req.param('mandayCost');
+    var profileName    = req.param('name');
+    var boardShortLink = req.param('boardShortLink');
+    var mandayCost     = req.param('mandayCost');
 
     if(!profileName){
       return res.send(500, 'profileName cant be empty');
@@ -78,6 +78,9 @@ module.exports = {
 
           var all = [];
           var count = boardProfiles.length;
+        if(count == 0){
+          res.json([]);
+        }
 
         for (i = 0; i < boardProfiles.length; i++) {
           var element = boardProfiles[i];

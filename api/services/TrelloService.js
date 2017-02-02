@@ -11,6 +11,7 @@ module.exports = {
   watchBoard: function(board, trello, next) {
 
     Board.findOrCreate({id : board.id}, {shortLink: board.shortLink, id: board.id, name : board.name, isWatched : false})
+      .populate('boardProfiles')
       .exec(function (err, createdBoard) {
       if (err) {
         sails.log.error(err);
@@ -30,25 +31,31 @@ module.exports = {
             //return next(500, err);
           }
 
-          TrelloService.watchBoardCards(createdBoard.id, trello, function func(next) {});
+          TrelloService.watchBoardCards(createdBoard, trello, function func(next) {});
           next(createdBoard);
         });
     });
   },
 
-  watchBoardCards: function(boardId, trello, next) {
+  watchBoardCards: function(board, trello, next) {
 
-    trello.getCardsOnBoard(boardId)
+    trello.getCardsOnBoard(board.id)
       .then((allCards) => {
         for (i = 0; i < allCards.length; i++) {
-          var card = allCards[i];
+          var card         = allCards[i];
+          var cardProfiles = [];
+
+          board.boardProfiles.forEach(function(element) {
+            cardProfiles.push({card : card.id, profile : element.profile, mandays : 0})
+          });
 
           Card.findOrCreate({id : card.id},
             {
-              id        : card.id,
-              shortLink : card.shortLink,
-              name      : card.name,
-              isWatched : false
+              id           : card.id,
+              shortLink    : card.shortLink,
+              name         : card.name,
+              isWatched    : false,
+              cardProfiles : cardProfiles
             }).exec(function (err, createdCard) {
             if (err) {
               sails.log.error(err);
@@ -56,7 +63,7 @@ module.exports = {
             }
 
             if(createdCard.isWatched == false){
-              // tod weekhook
+              // todo register weekhook
               //createdCard.isWatched = false;
             }
 
@@ -65,7 +72,6 @@ module.exports = {
               function(err){
                 if (err) {
                   sails.log.error(err);
-                  //return next(500, err);
                 }
                 next(createdCard);
               });
