@@ -25,7 +25,7 @@ module.exports = {
     }
 
     Profile
-      .findOrCreate({name : profileName}, {name : profileName})
+      .findOrCreate({ name: profileName }, { name: profileName })
       .exec(function (err, profile) {
         if (err) {
           sails.log.error(err);
@@ -33,7 +33,7 @@ module.exports = {
         }
 
         Board
-          .findOne({shortLink : boardShortLink})
+          .findOne({ shortLink: boardShortLink })
           .exec(function (err, board) {
             if (err) {
               sails.log.error(err);
@@ -46,24 +46,26 @@ module.exports = {
               profile    : profile.id
             };
 
-            BoardProfile.findOrCreate({board : board.id, profile : profile.id}, newBoardProfile).exec(function (err, boardProfile) {
-              if (err) {
-                sails.log.error(err);
-                return res.send(500, err);
-              }
+            BoardProfile
+              .findOrCreate({ board: board.id, profile: profile.id }, newBoardProfile)
+              .exec(function (err, boardProfile) {
+                if (err) {
+                  sails.log.error(err);
+                  return res.send(500, err);
+                }
 
-              boardProfile.mandayCost = mandayCost;
-              boardProfile.save(function (err) {
-                res.json(boardProfile);
+                boardProfile.mandayCost = mandayCost;
+                boardProfile.save(function (err) {
+                  res.json(boardProfile);
+                });
               });
-            });
           });
       });
   },
 
   profiles: function (req, res) {
     var shortLink = req.param('shortLink');
-    console.log('ShortLink', shortLink);
+    console.log('Profile.profiles ShortLink', shortLink);
 
     Board
       .findOne({ shortLink: shortLink })
@@ -91,11 +93,14 @@ module.exports = {
               cb(null);
             })
             .catch(function (err) {
+              console.log('Error in Profile.profiles...');
+              console.log('Find Board Profiles :', err);
               cb(err);
             });
         }, function (err) {
           if (err) {
-            console.log('Error in Profile.profiles :', err);
+            console.log('Error in Profile.profiles...');
+            console.log('Async Board Profiles :', err);
             throw err;
           }
           res.json(profiles);
@@ -103,26 +108,6 @@ module.exports = {
       }).catch(function (err) {
         if (err) return res.serverError(err);
       });
-  },
-
-  profile: function (req, res) {
-    var profileId = req.param('profileId');
-    var boardId   = req.param('boardId');
-
-    BoardProfile.findOne({board: boardId, profile: profileId}).exec(function (err, profile) {
-      if (err) {
-        sails.log.error(err);
-        return res(500, err);
-      }
-
-      res.json(
-        {
-          board      : profile.id,
-          profile    : profile.id,
-          mandayCost : profile.mandayCost,
-          id         : profile.id
-        });
-    });
   },
 
   remove: function (req, res) {

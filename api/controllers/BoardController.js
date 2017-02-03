@@ -24,7 +24,7 @@ module.exports = {
     var id = req.param('id');
 
     Board
-      .create({id: id})
+      .create({ id: id })
       .exec(function (err, board) {
         if (err) {
           sails.log.error(err);

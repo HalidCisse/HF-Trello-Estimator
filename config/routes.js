@@ -47,11 +47,10 @@ module.exports.routes = {
   'POST /api/user'                        : 'UserController.create',
   'GET /api/trelloCallback'               : 'TrelloHookController.callback',
 
-  'POST /api/profile'                     : 'ProfileController.create',
-  'GET  /api/profiles/:shortLink'         : 'ProfileController.profiles',
-  'GET  /api/profile/:boardId/:profileId' : 'ProfileController.profile',
+  'POST /api/board/profile'                     : 'ProfileController.create',
+  'GET  /api/board/profiles/:shortLink'         : 'ProfileController.profiles',
 
-  'PUT /api/Cards/addProfile'             : 'CardController.addProfile',
-  'PUT /api/Cards/setManday'              : 'CardController.setManday'
+  'POST /api/card/profile'                 : 'CardController.addProfile',
+  'GET /api/card/profiles/:shortLink'                 : 'CardProfileController.profiles'
 
 };

@@ -23,7 +23,7 @@ module.exports = {
           return next(500, err);
         }
 
-        if(createdBoard.isWatched == false){
+        if (createdBoard.isWatched == false){
           // tod weekhook
           // createdBoard.isWatched = false;
         }

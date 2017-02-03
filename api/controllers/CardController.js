@@ -91,12 +91,12 @@ module.exports = {
   },
 
   addProfile: function (req, res) {
-    var cardId    = req.param('cardId');
+    var cardShortlink    = req.param('cardShortlink');
     var profileId = req.param('profileId');
     var mandays   = req.param('mandays');
 
-    if(!cardId){
-      return res.send(500, 'cardId cant be empty');
+    if(!cardShortlink){
+      return res.send(500, 'cardShortlink cant be empty');
     }
 
     if(!profileId){
@@ -107,29 +107,44 @@ module.exports = {
       return res.send(500, 'mandays cant be empty');
     }
 
-    CardProfile
-      .findOrCreate({
-        card: cardId,
-        profile: profileId
-      }, {
-        card      : cardId,
-        profile   : profileId,
-        mandays   : mandays
+    Card
+      .findOne({
+        shortLink: cardShortlink
       })
-      .exec(function (err, createdProfile) {
+      .exec(function (err, card) {
         if (err) {
           sails.log.error(err);
-          return res.send(500, err);
+          return res(500, err);
         }
 
-        createdProfile.mandays = mandays;
-        createdProfile.save(function (err) {
-          if (err) {
-            sails.log.error(err);
-          }
-          res.send(createdProfile);
+        if (!card) {
+          return res.send(500, 'Card not found.');
+        }
+
+        CardProfile
+          .findOrCreate({
+            card: card.id,
+            profile: profileId
+          }, {
+            card      : card.id,
+            profile   : profileId,
+            mandays   : mandays
+          })
+          .exec(function (err, createdOrFoundProfile) {
+            if (err) {
+              sails.log.error(err);
+              return res.send(500, err);
+            }
+
+            createdOrFoundProfile.mandays = mandays;
+            createdOrFoundProfile.save(function (err) {
+              if (err) {
+                sails.log.error(err);
+              }
+              res.send(createdOrFoundProfile);
+            });
         });
-    });
+      });
   }
-  
+
 };
