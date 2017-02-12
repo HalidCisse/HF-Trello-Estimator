@@ -55,6 +55,7 @@ module.exports = {
               id        : card.id,
               shortLink : card.shortLink,
               name      : card.name,
+              board     : boardId,
               isWatched : false
             })
             .exec(function (err, createdCard) {

@@ -8,8 +8,13 @@
 module.exports = {
 
   boards: function (req, res) {
+    var query = {};
+    if (req.query.shortLink) {
+      query.shortLink = req.query.shortLink;
+    }
     Board
-      .find()
+      .find(query)
+      .populate('cards')
       .exec(function (err, boards) {
         if (err) {
           sails.log.error(err);

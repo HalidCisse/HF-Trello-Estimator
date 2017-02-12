@@ -21,6 +21,11 @@ module.exports = {
       defaultsTo : false
     },
 
+    isEstimated: {
+      type: 'boolean',
+      defaultsTo: false
+    },
+
     board: {
       model: 'board'
     },
@@ -30,5 +35,5 @@ module.exports = {
       via: 'card'
     }
   }
-  
+
 };

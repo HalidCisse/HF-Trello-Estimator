@@ -17,18 +17,23 @@ module.exports = {
           sails.log.error(err);
           res.send(500, 'Card not found.');
         }
-        
-        CardProfile
-          .find({ card: card.id })
-          .exec(function (err, profiles) {
-            if (err) {
-              sails.log.error(err);
-              res.send(500, 'Can\'t find this card\'s profiles.');
-            }
 
-            res.send(profiles);
-          });
-      })
+        if (card.id) {
+          CardProfile
+            .find({ card: card.id })
+            .populate('profile')
+            .exec(function (err, profiles) {
+              if (err) {
+                sails.log.error(err);
+                res.send(500, 'Can\'t find this card\'s profiles.');
+              }
+
+              res.send(profiles);
+            });
+        } else {
+          res.send(500, 'Card not found.');
+        }
+      });
   }
 
 };

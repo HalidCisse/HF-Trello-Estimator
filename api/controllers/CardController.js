@@ -8,16 +8,39 @@
 module.exports = {
 
   cards: function (req, res) {
-    Card
-      .find()
-      .exec(function (err, cards) {
-        if (err) {
-          sails.log.error(err);
-          return res(500, err);
-        }
+    var query = {};
+    if (req.query.boardShortLink) {
+      Board
+        .findOne({ shortLink: req.query.boardShortLink })
+        .exec(function (err, board) {
+          if (err) {
+            sails.log.error(err);
+            return res(500, 'Board not found.');
+          }
 
-        res.json(cards);
-      });
+          Card
+            .find({ board: board.id })
+            .exec(function (err, cards) {
+              if (err) {
+                sails.log.error(err);
+                return res(500, err);
+              }
+
+              res.json(cards);
+            });
+        })
+    } else {
+      Card
+        .find()
+        .exec(function (err, cards) {
+          if (err) {
+            sails.log.error(err);
+            return res(500, err);
+          }
+
+          res.json(cards);
+        });
+    }
   },
 
   card: function (req, res) {
@@ -141,7 +164,13 @@ module.exports = {
               if (err) {
                 sails.log.error(err);
               }
-              res.send(createdOrFoundProfile);
+              card.isEstimated = true;
+              card.save(function (err) {
+                if (err) {
+                  sails.log.error(err);
+                }
+                res.send(createdOrFoundProfile);
+              })
             });
         });
       });
