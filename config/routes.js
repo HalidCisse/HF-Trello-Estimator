@@ -44,17 +44,17 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'POST /api/user'                        : 'UserController.create',
-  'GET /api/trelloCallback'               : 'TrelloHookController.callback',
+  'POST /api/user'                              : 'UserController.create',
+  'GET /api/trelloCallback'                     : 'TrelloHookController.callback',
 
-  'GET /api/boards': 'BoardController.boards',
+  'GET /api/boards'                             : 'BoardController.boards',
 
   'POST /api/board/profile'                     : 'ProfileController.create',
   'GET  /api/board/profiles/:shortLink'         : 'ProfileController.profiles',
 
-  'GET /api/cards': 'CardController.cards',
+  'GET /api/cards'                              : 'CardController.cards',
 
-  'POST /api/card/profile'                 : 'CardController.addProfile',
-  'GET /api/card/profiles/:shortLink'                 : 'CardProfileController.profiles'
+  'POST /api/card/profile'                      : 'CardController.addProfile',
+  'GET /api/card/profiles/:shortLink'           : 'CardProfileController.profiles'
 
 };
