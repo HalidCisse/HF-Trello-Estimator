@@ -1,3 +1,3 @@
 # HF-Trello-Estimator
 
-a [Sails](http://sailsjs.org) application
+A hackaton project while working at Gemology in Rabat, Morocco.
